@@ -11,7 +11,7 @@ library("rgrass7")
 DEM <- "DEM_10m_Oslo"
 
 #Load data on snow statistics
-snow_observ_total <- read.csv("/home/stefan/R_Prosjekter/OpenNESS/GIS/Snow_depth/snow_depth_probability_81_2010_senorge.csv", header=TRUE, sep=',')
+snow_observ_total <- read.csv("./snow_depth_probability_1981_2009_senorge.csv", header=TRUE, sep=',')
 
 #Set analysis region to DEM
 execGRASS("g.region", flags=c("p"), raster=DEM)
@@ -59,4 +59,4 @@ for (m in 1:12) {
 }
 snow_probability_maps <- execGRASS("g.list", type="raster", pattern=paste("oslo_snow_greater_10cm_probability_bin_*", sep=''), separator="comma", legacyExec=TRUE, redirect=TRUE)
 execGRASS("r.series", flags=c("overwrite"), input= paste(c(snow_probability_maps), collapse=""), output="oslo_snow_days_greater_10cm_0_33_prob", method="sum")
-execGRASS("r.out.gdal", input="oslo_snow_days_greater_10cm_0_33_prob", output="/home/stefan/oslo_snow_days_greater_10cm_0_33_prob.tif", format="GTiff", createopt="COMPRESS=LZW,TFW=YES")
+execGRASS("r.out.gdal", input="oslo_snow_days_greater_10cm_0_33_prob", output="./oslo_snow_days_greater_10cm_0_33_prob.tif", format="GTiff", createopt="COMPRESS=LZW,TFW=YES")
